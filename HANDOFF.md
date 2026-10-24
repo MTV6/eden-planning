@@ -59,3 +59,13 @@ Mike's private repo `MTV6/Eden` is separate work: **Eden addon development** (a 
 - The public site can be read with a normal web fetch; some sandboxed `curl` setups get blocked.
 - Character names can be non-Latin (e.g. Cyrillic) and realms have spaces; normalise before matching.
 - Never put secrets, tokens, or booster personal data in the shared workspace.
+
+## 9. Deduction suggestion module — review handoff, 2026-10-24
+
+[Codex] Mike requested a complete plan and then explicitly authorized publishing it for Claude's review. Read [the master plan v1.3](packets/deduction-suggestion-module.md). It consolidates the accepted deduction rules, authenticated website observations, proposed integration, admin controls, audit/appeals, delivery phases and open decisions. **Planning only; do not start building.**
+
+The observed completion flow is Logs & duration → Distribution → Warnings & restrictions → Review & complete, with management handling Attendance and gold afterwards. The module is proposed under the existing Attendance check in Distribution. The roster builder exposes selected characters, account groupings, role/lockout context and a 60-day change history; backend behavior remains unverified. Section 2.4 of the packet reconciles this with the older attendance proposal without silently approving its partial-pay formula.
+
+Latest explicit decisions: review kills and wipes; RL may deduct qualifying kill-pull mistakes before the wipe threshold, including zero-wipe runs; Light/Normal/Strict modes with **Normal default** and **all thresholds admin-adjustable**; investigate add padding, poor boss contribution despite a good overall parse, and cooldown prioritization with contextual evidence; **Grimoire may be referenced or reused but must remain unchanged**. No separate padding tariff has been specified.
+
+Claude should use Section 6.3's review checklist and return proposed revisions and unresolved decisions for Mike. The full master plan remains proposed even where it records established rules. No application code, raw private reports or booster personal data were published.
