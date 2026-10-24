@@ -10,7 +10,7 @@ Eden is a **Retail World of Warcraft boosting community** (EU, server time CET/C
 - **Discord:** https://discord.gg/MPmyRWCjM (about 2,950 members). Note: the site links a different invite, `discord.gg/uRtNJKVSKy`.
 - **Discord bot:** links the site and Discord (announcements, roster messages, roles). We have not seen its code or command list yet.
 - **What happens there:** 100+ VIP raid runs a week, mythic boosts, alt gearing runs. Boosters sign up on the site; ilvl, Warcraft Logs and lockout status update automatically. Raid leaders (RLs) build rosters on the site, run the raid, then mark it Complete, after which it goes to attendance review and payouts. Accounts can be "frozen". There is an Elite Raider tier with applications.
-- **Developer:** credited on the site footer as "Aren". The dev team implements with their own Claude.
+- **Developer:** Sunking is the current developer and owner (Mike, 2026-10-24). The site footer still credits "Aren", the previous owner. The dev team implements with their own Claude.
 
 ## 2. Who Mike is and what we produce
 

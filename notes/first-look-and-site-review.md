@@ -8,7 +8,7 @@ _Written 2026-10-13 from the public website and Discord listing only (no login).
 - `/` is a marketing landing page: "WoW Raid Boosting Platform", "Professional raid boosting for Eden guild", three feature cards (Elite Protection, Lightning Fast, Premium Rewards), stats (200+ Active Players, 2K+ Games Played, 99.9% Server Stability, 24/7 Community), a FAQ, and a "Login via Discord" button.
 - FAQ questions: "How do payouts work?" (listed twice), "What are the requirements?", "Why is my account frozen?". No answer text came through in the page content (could be JS accordions, could be empty; worth a manual check).
 - `/home` and `/dashboard` (including `/dashboard?tab=eden-runs`) show only "EDEN / The hub of the Eden community / Checking your session" plus a Discord join link. Everything real lives behind Discord login.
-- Footer: "Developed by Aren" with a personal email address.
+- Footer: "Developed by Aren" with a personal email address. (Aren is the previous owner; Sunking is the current developer, per Mike 2026-10-24.)
 
 **Discord listing** (discord.com/servers, ~2,950 members, ~300 online, created 15 Apr 2025).
 - "Eden inhouse +100x Vip Runs weekly, 100% pickrate if you got the minimum requirements."
