@@ -1,6 +1,6 @@
 # WCL connection and all-pull evidence import
 
-24 October 2026 · Local implementation; OAuth authentication verified; real-run capture validation pending report input.
+24 October 2026 · OAuth authentication and first complete real-report capture verified; mixed/wipe live cases remain pending.
 
 ## Added
 
@@ -25,10 +25,12 @@ Official schema/auth references used:
 - https://www.warcraftlogs.com/v2-api-docs/warcraft/reportfight.doc.html
 - https://www.warcraftlogs.com/v2-api-docs/warcraft/eventdatatype.doc.html
 
-## Still required for a real-run test
+## First real-run test
 
 Mike authorized copying Grimoire's existing WCL credential pair into Eden's ignored local credential store. The copy was verified through the official OAuth endpoint, both stored values matched the source, and the Grimoire source file was checked unchanged. No credentials or tokens are included in this repository or this report. Each application manages its own token; Eden does not read the Grimoire checkout at runtime.
 
-Supply authorized report links, approximate run time and/or roster hints for the next test. OAuth success establishes authentication only. The 35 automated tests use mocked report/event responses and do not establish live GraphQL query compatibility, real-run capture success or complete recorder coverage. No Grimoire files were changed.
+Mike supplied a report and roster screenshot. The first complete live capture contains ten Heroic kills, zero recorded boss wipes, 273 pages and 2,679,804 raw events. All fourteen supplied characters matched; thirteen other characters remain unclassified. Stored raw-page hashes, terminal pagination, manifest event totals, API-complete pull markers and the audit chain were verified. The result is a local draft with zero suggestions. See `LIVE-VALIDATION.md`; no report links, names, roster or captured evidence are included in that redacted record.
+
+The first attempt reached the 500 MiB uncompressed JSON cap after seven completed pulls and failed without importing a partial review. The cap was raised to 2 GiB, with five million events still enforced; the full capture used 905,713,426 uncompressed bytes. All 35 automated checks passed again after the change. Mixed/split reports and wipe pulls still need live validation beyond their fixture tests. Successful API capture does not prove recorder coverage or establish fault. No Grimoire files were changed.
 
 This connects evidence retrieval and run selection, not automatic mechanic attribution. Private-report user OAuth, archive subscriptions, live mutable reports, verified account/alt ownership, encounter packs and padding detection are not implemented by this slice.

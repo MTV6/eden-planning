@@ -1,6 +1,6 @@
 # Eden deduction module — review handoff
 
-Updated 24 October 2026 by Codex. Version 0.3.0; local prototype, not deployed to Eden.
+Updated 24 October 2026 by Codex. Version 0.3.1; local prototype, not deployed to Eden.
 
 ## Working now
 
@@ -12,7 +12,9 @@ Updated 24 October 2026 by Codex. Version 0.3.0; local prototype, not deployed t
 
 ## Verification and limits
 
-35 automated checks passed again before publication. Report/event tests use fixtures. A real Eden report has **not** been captured or reviewed yet. Authentication success does not establish real GraphQL ingestion success.
+35 automated checks passed again before publication and after the capture-limit fix. The first authorized real Eden report was successfully captured: ten Heroic kills, zero recorded boss wipes, 273 pages and 2,679,804 raw events. Fourteen supplied roster members were matched; thirteen other characters remain unclassified. All stored-page hashes, terminal cursors, manifest event totals and the audit chain checked out. The review remains a local draft with zero deduction suggestions. Its 69 recorded deaths are evidence, not 69 proven mistakes.
+
+The first attempt failed closed at the 500 MiB uncompressed capture limit; no partial review was created. Increasing that limit to 2 GiB allowed all ten pulls (905,713,426 uncompressed bytes) to finish. The five-million-event limit remains. See `LIVE-VALIDATION.md` for the redacted verification record. This validates one kill-only report; mixed reports, wipes and ambiguity handling have fixture coverage but still need representative live tests.
 
 No automatic encounter mechanic, wipe-cause, padding, boss-damage priority or cooldown-holding detector is implemented. Live imports begin with evidence and no invented deduction proposals. The sample run's proposals are synthetic. An event or death alone does not establish fault.
 
@@ -20,8 +22,8 @@ Confirmation is local and exports always say `appliedToEden: false`. Nothing cha
 
 ## Next work
 
-1. Supply an authorized real Eden report (multiple reports where useful), approximate start and roster hints.
-2. Verify actual metadata/schema, manually confirm mixed-report scope and player roles, capture every selected kill and wipe, and compare coverage with WCL.
+1. Open the completed local draft and review the evidence timeline; clarify the thirteen unclassified participants before any role-dependent decisions.
+2. Test authorized mixed/split reports and actual wipe pulls next, verifying scope, duplicate handling and coverage against WCL. The first live test establishes API ingestion, not mechanic fault attribution or complete recorder coverage.
 3. Keep a redacted verification report; do not commit captured reports, rosters, databases or recordings.
 4. Build a small reviewed encounter pack only after identifying the raid/patch/difficulty and agreeing evidence-backed mistakes. Validate cause and context before suggesting shares.
 5. Add contextual damage-priority analysis, then an Eden adapter with authenticated permissions and idempotent application receipts when the website developers provide contracts.

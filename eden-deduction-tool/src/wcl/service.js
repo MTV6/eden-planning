@@ -139,7 +139,7 @@ export class WclService {
           const next = batch.page.nextPageTimestamp;
           requireValue(next === null || (Number.isFinite(next) && next > expectedStart && next <= fight.endTime), 'Raw page cursor did not advance', 502);
           const raw = JSON.stringify(batch); bytes += Buffer.byteLength(raw);
-          requireValue(bytes <= 500 * 1024 * 1024 && job.progress.events + batch.page.data.length <= 5000000, 'Capture resource budget reached; no complete review created. Narrow selection.', 413);
+          requireValue(bytes <= 2 * 1024 * 1024 * 1024 && job.progress.events + batch.page.data.length <= 5000000, 'Capture resource budget reached; no complete review created. Narrow selection.', 413);
           this.ledger.db.prepare('INSERT INTO wcl_pages VALUES(?,?,?,?,?)').run(id, fight.key, batch.index, gzipSync(raw), digest(batch));
           projection.page(batch); pages++; count += batch.page.data.length; terminal = next === null; expectedStart = next;
           job.progress = {...job.progress, current: `${fight.boss} · ${fight.outcome}`, pages: job.progress.pages + 1, events: job.progress.events + batch.page.data.length}; this.saveJob(job);
