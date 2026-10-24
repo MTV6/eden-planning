@@ -1,0 +1,9 @@
+{
+  "name": "eden-deduction-tool",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "engines": {"node": ">=24"},
+  "scripts": {"start": "node --env-file-if-exists=.env review-server.js", "test": "node --test test/*.test.js"},
+  "exports": {".": "./src/ledger/index.js", "./wcl": "./src/wcl/index.js"}
+}

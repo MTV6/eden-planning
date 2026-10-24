@@ -1,0 +1,7 @@
+{
+  "id":"synthetic-demo-v1", "version":1, "encounterId":900001, "difficulty":4,
+  "snapshotId":"synthetic-demo", "syntheticOnly":true,
+  "status":"reviewed-demo-only",
+  "sources":["Synthetic test fixture; not a real encounter or spell"],
+  "rules":[{"id":"demo-wave","abilityIds":[990001],"label":"Illustrative avoidable wave","avoidableDeath":true}]
+}
