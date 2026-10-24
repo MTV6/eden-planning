@@ -1,3 +1,5 @@
+import {EvidenceReview} from './review.js';
+import {roles} from '../ledger/participants.js';
 import {randomUUID} from 'node:crypto';
 import {gzipSync, gunzipSync} from 'node:zlib';
 import {existsSync, readFileSync, writeFileSync, mkdirSync} from 'node:fs';
@@ -58,7 +60,7 @@ function projector(report, fight, assignments) {
 export class WclService {
   constructor({ledger, client, connection = null}) {
     Object.assign(this, {ledger, client, connection}); this.controllers = new Map(); this.tasks = new Map();
-    this.missing = new MissingLogSearch(this);
+    this.missing = new MissingLogSearch(this); this.review = new EvidenceReview(this);
     ledger.db.exec(`CREATE TABLE IF NOT EXISTS wcl_drafts(id TEXT PRIMARY KEY,body TEXT NOT NULL);
       CREATE TABLE IF NOT EXISTS wcl_jobs(id TEXT PRIMARY KEY,body TEXT NOT NULL);
       CREATE TABLE IF NOT EXISTS wcl_pages(job_id TEXT NOT NULL, fight_key TEXT NOT NULL, page_index INTEGER NOT NULL, body BLOB NOT NULL, hash TEXT NOT NULL, PRIMARY KEY(job_id,fight_key,page_index));`);
@@ -98,7 +100,7 @@ export class WclService {
     requireValue(players.length > 0 && players.length <= 100, 'The selected run needs 1–100 known player characters');
     const assignments = players.map(player => {
       const choices = input.assignments.filter(a => a.id === player.id);
-      requireValue(choices.length === 1 && ['unclassified', 'booster', 'raidleader', 'lb', 'buyer'].includes(choices[0].role), 'Classify each selected character or leave them explicitly unclassified');
+      requireValue(choices.length === 1 && roles.includes(choices[0].role), 'Classify each selected character or leave them explicitly unclassified');
       return {...player, role: choices[0].role};
     });
     const job = {id: randomUUID(), draftId: draft.id, policyVersion: this.ledger.policy().version, title: string(input.title, 'Run review title', 200), fightKeys: selected.map(f => f.key), assignments, actor, status: 'queued', progress: {pulls: 0, total: selected.length, pages: 0, events: 0}, createdAt: new Date().toISOString(), runId: null};

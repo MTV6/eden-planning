@@ -1,3 +1,4 @@
+import {classify, reviewRoles, responsiblePlayer} from './participants.js';
 import {DatabaseSync} from 'node:sqlite';
 import {createHash, randomUUID} from 'node:crypto';
 import {mkdirSync} from 'node:fs';
@@ -80,8 +81,8 @@ export class Ledger {
     });
   }
   addIncident(run, policy, input, actor, runId) {
-    const player = run.players.find(p => p.id === input.playerId), pull = run.pulls.find(p => p.id === input.pullId), rule = policy.rules.find(r => r.id === input.ruleId);
-    requireValue(player && ['booster', 'raidleader'].includes(player.role), 'Select an eligible booster or RL; classify unknown participants first');
+    const player = responsiblePlayer(run, input.playerId), pull = run.pulls.find(p => p.id === input.pullId), rule = policy.rules.find(r => r.id === input.ruleId);
+    requireValue(player && reviewRoles.includes(player.role), 'Select an eligible booster or RL; classify unknown participants first');
     requireValue(pull && rule, 'Select a pull and rule'); requireValue(rule.outcomes.includes(pull.outcome), 'Rule does not apply to this pull outcome');
     const reason = string(input.reason, 'Deduction reason', 3000);
     const evidenceNote = (input.evidenceNote ?? '').trim(); requireValue(evidenceNote.length <= 3000, 'Evidence note too long');
@@ -101,7 +102,7 @@ export class Ledger {
     }
     const incidentKey = string(input.incidentKey, 'Incident key (group the same mistake together)', 200);
     requireValue(!run.incidents.some(i => i.playerId === player.id && i.pullId === pull.id && i.incidentKey === incidentKey), 'This player already has a deduction for this incident; remove the old entry before replacing it');
-    const incident = {id: randomUUID(), playerId: player.id, pullId: pull.id, ruleId: rule.id, ruleLabel: rule.label, units: halfUnits(rule.shares), reason, evidenceNote, evidenceEventIds: ids, incidentKey, applicability: {...applicable, note: applicabilityNote, exception: input.exception ?? null}, proposalId: input.proposalId ?? null, actor, at: new Date().toISOString()};
+    const incident = {id: randomUUID(), playerId: player.id, sourcePlayerId: input.playerId, pullId: pull.id, ruleId: rule.id, ruleLabel: rule.label, units: halfUnits(rule.shares), reason, evidenceNote, evidenceEventIds: ids, incidentKey, applicability: {...applicable, note: applicabilityNote, exception: input.exception ?? null}, proposalId: input.proposalId ?? null, actor, at: new Date().toISOString()};
     run.incidents.push(incident); delete run.rounding[player.id];
     this.audit(actor, 'incident.accepted', incident, runId); return incident;
   }
@@ -114,17 +115,8 @@ export class Ledger {
       }
       requireValue(run.status === 'draft', 'Review is confirmed. Reopen it before changing decisions.', 409);
       if (input.action === 'classify') {
-        requireValue(Array.isArray(input.players) && input.players.length === run.players.length && new Set(input.players.map(p => p.id)).size === run.players.length, 'Provide one role for each player');
-        const changes = [];
-        for (const player of run.players) {
-          const next = input.players.find(p => p.id === player.id);
-          requireValue(next && ['unclassified', 'booster', 'raidleader', 'buyer', 'lb'].includes(next.role), 'Invalid participant classification');
-          if (player.role !== next.role) {
-            requireValue(!run.incidents.some(i => i.playerId === player.id), 'Withdraw accepted deductions before changing that player’s role');
-            changes.push({playerId: player.id, from: player.role, to: next.role}); player.role = next.role;
-          }
-        }
-        this.audit(actor, 'participants.classified', {changes}, id);
+        const previous=run.players; run.players=classify(run,input);
+        this.audit(actor, 'participants.classified', {previous, players:run.players}, id);
       }
       else if (input.action === 'add') this.addIncident(run, policy, {...input, proposalId: null}, actor, id);
       else if (input.action === 'decision') {

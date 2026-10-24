@@ -1,7 +1,7 @@
 export function initWclUI({api, task, notice, openRun, esc, options}) {
   const $ = selector => document.querySelector(selector);
   let draft = null, selected = new Set(), classifications = new Map(), poll = null, missingResult = null;
-  const roles = [['unclassified', 'Unclassified · cannot deduct'], ['booster', 'Booster'], ['raidleader', 'Raid leader'], ['lb', 'Lootbody'], ['buyer', 'Buyer / client']];
+  const roles = [['unclassified', 'Unclassified · cannot deduct'], ['booster', 'Booster'], ['helper', 'Helper / replacement'], ['raidleader', 'Raid leader'], ['lb', 'Lootbody'], ['buyer', 'Buyer / client']];
   function selectionPlayers() {
     if (!draft) return [];
     const fights = draft.fights.filter(f => selected.has(f.key));

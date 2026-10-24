@@ -1,6 +1,6 @@
 # Eden deduction review — local ledger and WCL evidence import
 
-A local, deduction-only review ledger with a WCL evidence importer. One standard policy, evidence-linked decisions, exact half-share totals, explicit RL rounding and a durable audit history. It does not apply anything to Eden or automatically attribute mechanic blame.
+A local, deduction-only review ledger with a WCL evidence importer. One standard policy, evidence-linked decisions, exact half-share totals, explicit RL rounding and a durable audit history. It does not apply anything to Eden or automatically attribute mechanic blame. Version 0.5.0 adds role-filtered death cards and a limited Ula’tek observation pack.
 
 ## Run
 
@@ -38,6 +38,14 @@ The default searches six characters and two history pages per character; control
 Load a candidate to inspect its metadata alongside the current reports (four reports maximum). This creates a fresh selection: inspect each pull, choose one recording for overlapping pulls and classify participants again before capturing events. Search never imports events, attributes fault or changes deductions. Overlap warnings allow 15 seconds of recorder clock skew and compare encounter, difficulty, outcome and roster.
 
 Search results and history persist locally. History/report metadata are cached for ten minutes; realm directories for 24 hours. Each search is bounded to 60 logical query units, 16 candidate reports and two minutes; retries and WCL point costs are separate from the query count. Cached searches can use zero new queries. Expired cache rows refresh on reuse; automatic cleanup is not implemented. Results contain personal data and must stay out of GitHub. See `MILESTONE-3-MISSING-LOGS.md` for validation and limitations.
+
+## Classify players and review deaths
+
+Open a captured review and expand **Review participant roles**. Paste an Eden roster or helper/buyer/LB list, stage unique Character-Realm matches, review and save. Unknown characters remain unknown. Helpers are eligible for review. Confirmed alts can link directly to a booster/helper/RL with an ownership note; do not guess ownership from a shared report.
+
+Choose **Generate review from capture**. The new cards scan existing saved evidence without WCL requests. Buyer/LB/unknown deaths are excluded from deduction candidates; unknown deaths remain available for classification. Death cards show timed WCL links, lethal damage, recent healing, observed defensive use and debuff stacks. Cooldown readiness and avoidability remain unknown unless separately established. Pull/type filters and batches of 20 keep review manageable.
+
+The initial Heroic Ula’tek pack recognizes two Doomscale cast failures by add instance and Roll during Mother’s Wrath damage. Review assignment and consequences before choosing the responsible player. **Prepare deduction for review** fills the manual form with evidence and a pinned-policy rule; it does not accept a deduction. One shared incident key prevents charging both a related death and mechanic card to the same player, including confirmed alts. Snapshots/settings are retained and audited; earlier snapshots survive regeneration. See `MILESTONE-4-DEATH-REVIEW.md` for tested scope and remaining gaps.
 
 ## Try the workflow
 

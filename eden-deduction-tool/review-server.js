@@ -7,7 +7,7 @@ import {WclClient} from './src/wcl/client.js';
 import {Connection, WclService} from './src/wcl/service.js';
 
 const root = new URL('./', import.meta.url);
-const files = new Map([['/', 'public/index.html'], ['/app.js', 'public/app.js'], ['/wcl-ui.js', 'public/wcl-ui.js'], ['/style.css', 'public/style.css']]);
+const files = new Map([['/', 'public/index.html'], ['/app.js', 'public/app.js'], ['/wcl-ui.js', 'public/wcl-ui.js'], ['/review-ui.js', 'public/review-ui.js'], ['/style.css', 'public/style.css']]);
 const security = {'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"};
 function json(res, status, value) { res.writeHead(status, {...security, 'Content-Type': 'application/json; charset=utf-8'}); res.end(JSON.stringify(value)); }
 async function body(req) {
@@ -38,10 +38,13 @@ export function createServer({ledger = new Ledger(fileURLToPath(new URL('data/le
       if (req.method === 'GET' && searchMatch) return json(res, 200, wcl.missing.get(searchMatch[1]));
       const importMatch = path.match(/^\/api\/wcl\/(drafts|jobs)\/([a-z0-9-]+)$/);
       if (req.method === 'GET' && importMatch) return json(res, 200, importMatch[1] === 'jobs' ? wcl.job(importMatch[2]) : wcl.preview(wcl.draft(importMatch[2])));
+      const evidenceMatch=path.match(/^\/api\/wcl\/review\/([a-z0-9-]+)$/);
+      if(evidenceMatch && req.method==='GET') return json(res,200,wcl.review.get(evidenceMatch[1]));
       const match = path.match(/^\/api\/runs\/([a-z0-9-]+)(?:\/(export|audit))?$/);
       if (match && req.method === 'GET') return json(res, 200, match[2] === 'export' ? ledger.exportRun(match[1]) : match[2] === 'audit' ? ledger.history(match[1]) : ledger.run(match[1]));
       if (req.method !== 'POST') return json(res, 404, {error: 'Not found'});
       const input = await body(req); const actor = string(input.actor, 'Local reviewer name', 100);
+      if(evidenceMatch) return json(res,200,wcl.review.build(evidenceMatch[1],input,actor));
       if (path === '/api/wcl/credentials') { const status = await connection.save(input); ledger.audit(actor, 'wcl.connection.configured', {access: status.access}); return json(res, 200, status); }
       if (path === '/api/wcl/discover') return json(res, 201, await wcl.discover(input, actor));
       if (path === '/api/wcl/find-missing') return json(res, 201, await wcl.missing.search(input, actor));

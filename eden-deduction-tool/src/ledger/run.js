@@ -1,3 +1,4 @@
+import {roles, validateLinks} from './participants.js';
 import {requireValue, string} from './policy.js';
 
 export function validateRun(input) {
@@ -7,9 +8,10 @@ export function validateRun(input) {
   const players = input.players.map(p => {
     const id = string(p.id, 'Player ID', 100);
     requireValue(!playerIds.has(id), 'Duplicate player ID'); playerIds.add(id);
-    requireValue(['unclassified', 'booster', 'raidleader', 'lb', 'buyer'].includes(p.role), 'Invalid participant role');
-    return {id, name: string(p.name, 'Player name', 150), character: string(p.character, 'Character and realm', 150), role: p.role};
+    requireValue(roles.includes(p.role), 'Invalid participant role');
+    return {id, name: string(p.name, 'Player name', 150), character: string(p.character, 'Character and realm', 150), role: p.role, ownerId: p.ownerId || null, classificationNote: p.classificationNote ? string(p.classificationNote,'Classification evidence',1000) : ''};
   });
+  validateLinks(players);
   requireValue(Array.isArray(input.pulls) && input.pulls.length > 0 && input.pulls.length <= 500, 'Provide 1–500 pulls');
   const pullIds = new Set(), eventIds = new Set();
   const pulls = input.pulls.map(p => {
