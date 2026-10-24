@@ -5,6 +5,7 @@ import {dirname} from 'node:path';
 import {WclClient, reportCode} from './client.js';
 import {metadata, buildScope, selectScope, playersFor, digest} from './scope.js';
 import {requireValue, string, DomainError} from '../ledger/policy.js';
+import {MissingLogSearch} from './missing.js';
 
 export class Connection {
   constructor(path, env = process.env, clientFactory = credentials => new WclClient({credentials: () => credentials})) { this.path = path; this.env = env; this.clientFactory = clientFactory; }
@@ -57,6 +58,7 @@ function projector(report, fight, assignments) {
 export class WclService {
   constructor({ledger, client, connection = null}) {
     Object.assign(this, {ledger, client, connection}); this.controllers = new Map(); this.tasks = new Map();
+    this.missing = new MissingLogSearch(this);
     ledger.db.exec(`CREATE TABLE IF NOT EXISTS wcl_drafts(id TEXT PRIMARY KEY,body TEXT NOT NULL);
       CREATE TABLE IF NOT EXISTS wcl_jobs(id TEXT PRIMARY KEY,body TEXT NOT NULL);
       CREATE TABLE IF NOT EXISTS wcl_pages(job_id TEXT NOT NULL, fight_key TEXT NOT NULL, page_index INTEGER NOT NULL, body BLOB NOT NULL, hash TEXT NOT NULL, PRIMARY KEY(job_id,fight_key,page_index));`);

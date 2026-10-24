@@ -1,6 +1,6 @@
 # Eden deduction module — review handoff
 
-Updated 24 October 2026 by Codex. Version 0.3.1; local prototype, not deployed to Eden.
+Updated 24 October 2026 by Codex. Version 0.4.0; local prototype, not deployed to Eden.
 
 ## Working now
 
@@ -11,6 +11,8 @@ Updated 24 October 2026 by Codex. Version 0.3.1; local prototype, not deployed t
 - WCL credentials copied locally with Mike's authorization; live OAuth verification passed. Grimoire remains unchanged and Eden runs independently.
 
 ## Verification and limits
+
+Current suite: **45 automated tests pass**. Missing-log discovery was tested on the second historical Eden run: all 13 expected characters searched; five candidate reports from four uploaders found. The strongest candidate matches all 13 characters on a pull, overlaps all three known final-boss pulls and offers eight additional candidate kills plus six wipes. A repeat browser search used zero new queries and 28 cache hits. Loading that candidate identified all three overlapping pulls and left the fresh selection empty for manual review. No events or deductions were imported by this search. See `MILESTONE-3-MISSING-LOGS.md`.
 
 35 automated checks passed again before publication and after the capture-limit fix. The first authorized real Eden report was successfully captured: ten Heroic kills, zero recorded boss wipes, 273 pages and 2,679,804 raw events. Fourteen supplied roster members were matched; thirteen other characters remain unclassified. All stored-page hashes, terminal cursors, manifest event totals and the audit chain checked out. The review remains a local draft with zero deduction suggestions. Its 69 recorded deaths are evidence, not 69 proven mistakes.
 
@@ -23,7 +25,7 @@ Confirmation is local and exports always say `appliedToEden: false`. Nothing cha
 ## Next work
 
 1. Open the completed local draft and review the evidence timeline; clarify the thirteen unclassified participants before any role-dependent decisions.
-2. Test authorized mixed/split reports and actual wipe pulls next, verifying scope, duplicate handling and coverage against WCL. The first live test establishes API ingestion, not mechanic fault attribution or complete recorder coverage.
+2. Review the newly discovered mixed-report candidates and capture the confirmed missing kills/wipes next. Live search and duplicate metadata handling passed; full event capture and fault attribution for this historical case remain unvalidated.
 3. Keep a redacted verification report; do not commit captured reports, rosters, databases or recordings.
 4. Build a small reviewed encounter pack only after identifying the raid/patch/difficulty and agreeing evidence-backed mistakes. Validate cause and context before suggesting shares.
 5. Add contextual damage-priority analysis, then an Eden adapter with authenticated permissions and idempotent application receipts when the website developers provide contracts.

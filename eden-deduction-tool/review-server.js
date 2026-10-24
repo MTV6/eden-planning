@@ -33,6 +33,9 @@ export function createServer({ledger = new Ledger(fileURLToPath(new URL('data/le
       if (req.method === 'GET' && path === '/api/demo') return json(res, 200, JSON.parse(await readFile(new URL('examples/sample-run.json', root), 'utf8')));
       if (req.method === 'GET' && path === '/api/audit') return json(res, 200, ledger.history());
       if (req.method === 'GET' && path === '/api/wcl/status') return json(res, 200, {...connection.status(), jobs: wcl.listJobs()});
+      if (req.method === 'GET' && path === '/api/wcl/searches') return json(res, 200, wcl.missing.list());
+      const searchMatch = path.match(/^\/api\/wcl\/searches\/([a-z0-9-]+)$/);
+      if (req.method === 'GET' && searchMatch) return json(res, 200, wcl.missing.get(searchMatch[1]));
       const importMatch = path.match(/^\/api\/wcl\/(drafts|jobs)\/([a-z0-9-]+)$/);
       if (req.method === 'GET' && importMatch) return json(res, 200, importMatch[1] === 'jobs' ? wcl.job(importMatch[2]) : wcl.preview(wcl.draft(importMatch[2])));
       const match = path.match(/^\/api\/runs\/([a-z0-9-]+)(?:\/(export|audit))?$/);
@@ -41,6 +44,8 @@ export function createServer({ledger = new Ledger(fileURLToPath(new URL('data/le
       const input = await body(req); const actor = string(input.actor, 'Local reviewer name', 100);
       if (path === '/api/wcl/credentials') { const status = await connection.save(input); ledger.audit(actor, 'wcl.connection.configured', {access: status.access}); return json(res, 200, status); }
       if (path === '/api/wcl/discover') return json(res, 201, await wcl.discover(input, actor));
+      if (path === '/api/wcl/find-missing') return json(res, 201, await wcl.missing.search(input, actor));
+      if (path === '/api/wcl/load-candidate') return json(res, 201, await wcl.missing.add(input, actor));
       if (path === '/api/wcl/capture') return json(res, 202, wcl.start(input, actor));
       if (path === '/api/wcl/cancel') return json(res, 200, wcl.cancel(input.jobId, actor));
       if (path === '/api/runs') return json(res, 201, ledger.importRun(input.run, actor));

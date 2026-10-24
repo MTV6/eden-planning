@@ -16,6 +16,7 @@ export const METADATA_QUERY = `query EdenReport($code:String!){reportData{report
 export const EVENTS_QUERY = `query EdenEvents($code:String!,$fightIDs:[Int]!,$start:Float!,$end:Float!){reportData{report(code:$code,allowUnlisted:true){
   events(fightIDs:$fightIDs,startTime:$start,endTime:$end,dataType:All,includeResources:true,useAbilityIDs:true,useActorIDs:true,limit:10000){data nextPageTimestamp}
 }}}`;
+export const HISTORY_QUERY = `query EdenCharacterReports($name:String!,$realm:String!,$region:String!,$page:Int!){characterData{character(name:$name,serverSlug:$realm,serverRegion:$region){name hidden server{name slug region{slug}} recentReports(limit:50,page:$page){data{code title startTime endTime owner{name}} current_page has_more_pages}}}}`;
 const abortError = () => new DomainError('Capture cancelled', 409);
 export class WclClient {
   constructor({credentials = () => ({clientId: process.env.WCL_CLIENT_ID, clientSecret: process.env.WCL_CLIENT_SECRET}), fetchImpl = fetch, sleep = (ms, signal) => new Promise((resolve, reject) => {
@@ -64,6 +65,18 @@ export class WclClient {
     const code = reportCode(value), data = await this.query(METADATA_QUERY, {code}, signal);
     requireValue(data.reportData?.report, 'Report unavailable. Check its code and public access; private-report OAuth is not supported yet.', 404);
     return data.reportData.report;
+  }
+  async realms(region, signal) {
+    const regions = (await this.query('query EdenRegions{worldData{regions{id slug}}}', {}, signal)).worldData?.regions;
+    const found = regions?.find(r => r.slug.toLowerCase() === region);
+    requireValue(found, 'WCL region unavailable', 502);
+    const data = await this.query('query EdenRealms($id:Int!){worldData{region(id:$id){servers(limit:5000,page:1){data{name normalizedName slug} has_more_pages}}}}', {id: found.id}, signal);
+    const page = data.worldData?.region?.servers;
+    requireValue(Array.isArray(page?.data) && page.has_more_pages === false, 'Incomplete WCL realm directory', 502);
+    return page.data;
+  }
+  async characterReports(character, page, signal) {
+    return (await this.query(HISTORY_QUERY, {name: character.name, realm: character.slug, region: character.region, page}, signal)).characterData?.character ?? null;
   }
   async *pages(code, fight, signal) {
     reportCode(code); let start = fight.startTime;

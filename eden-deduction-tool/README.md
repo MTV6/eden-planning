@@ -29,6 +29,16 @@ Current limits: four reports per metadata load, 200 selected pulls, 100 distinct
 
 `data/ledger.sqlite` now also contains report snapshots, selected scope, jobs and gzip-compressed raw event pages with content hashes. Capture links record report revision, fetch time, selection confirmation, fight identity and completeness. Secrets are stored separately and are not included in capture, audit or deduction output. Do not publish either file. This ingestion implementation is Eden-owned and does not depend on or modify Grimoire.
 
+## Find missing logs from other uploaders
+
+After loading metadata, select known pulls from the boost and expand **Find missing logs**. Enter the expected Character-Realm roster and start/end timestamps with explicit timezone offsets. Search uses WCL character report histories, prioritizing characters missing from the selected pulls. Review the time window carefully for mixed uploads.
+
+The default searches six characters and two history pages per character; controls allow up to 40 characters and three pages. Results explain roster overlap, matching known pulls and additional candidate kills/wipes. Hidden characters, unavailable histories, errors and search limits remain visible. An empty search does not prove no other recording exists.
+
+Load a candidate to inspect its metadata alongside the current reports (four reports maximum). This creates a fresh selection: inspect each pull, choose one recording for overlapping pulls and classify participants again before capturing events. Search never imports events, attributes fault or changes deductions. Overlap warnings allow 15 seconds of recorder clock skew and compare encounter, difficulty, outcome and roster.
+
+Search results and history persist locally. History/report metadata are cached for ten minutes; realm directories for 24 hours. Each search is bounded to 60 logical query units, 16 candidate reports and two minutes; retries and WCL point costs are separate from the query count. Cached searches can use zero new queries. Expired cache rows refresh on reuse; automatic cleanup is not implemented. Results contain personal data and must stay out of GitHub. See `MILESTONE-3-MISSING-LOGS.md` for validation and limitations.
+
 ## Try the workflow
 
 1. Load the synthetic zero-wipe run. Its proposals are explicit fixture inputs, not automated detection results.

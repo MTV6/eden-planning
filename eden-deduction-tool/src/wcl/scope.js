@@ -5,6 +5,11 @@ export const digest = value => createHash('sha256').update(JSON.stringify(value)
 const normalize = text => String(text ?? '').normalize('NFC').toLocaleLowerCase('en-US');
 export function characterKey(name, realm) { return realm ? `${normalize(name)}@${normalize(realm).replace(/[\s'’-]/g, '')}` : null; }
 const identityKey = (report, actor) => actor.realm && report.region ? `${report.region}:${characterKey(actor.name, actor.realm)}` : `${report.code}:${actor.id}`;
+// Recording clocks can differ by several seconds. This is a duplicate warning,
+// never permission to silently discard a pull or merge identities.
+export function samePullTiming(a, b) {
+  return a.encounterId === b.encounterId && a.difficulty === b.difficulty && a.outcome === b.outcome && Math.abs(a.startEpoch - b.startEpoch) <= 15000 && Math.abs(a.endEpoch - b.endEpoch) <= 15000;
+}
 export function metadata(raw) {
   requireValue(raw && reportCode(raw.code) && Number.isFinite(raw.startTime) && Number.isFinite(raw.endTime) && Number.isInteger(raw.revision), 'Invalid WCL report metadata', 502);
   requireValue(Array.isArray(raw.fights) && Array.isArray(raw.masterData?.actors), 'WCL fight/actor metadata is missing', 502);
@@ -52,9 +57,9 @@ export function buildScope(reports, context = {}) {
   const fights = reports.flatMap(report => report.fights.map(f => ({...f, reportCode: report.code, region: report.region, participants: f.playerIds.map(id => identityKey(report, report.actors.find(a => a.id === id))), hintParticipants: f.playerIds.map(id => {const a = report.actors.find(a => a.id === id); return characterKey(a.name, a.realm);})}))).sort((a, b) => a.startEpoch - b.startEpoch || a.key.localeCompare(b.key));
   const duplicatePairs = [];
   for (let i = 0; i < fights.length; i++) for (let j = i + 1; j < fights.length; j++) {
-    const a = fights[i], b = fights[j]; if (b.startEpoch - a.startEpoch > 5000) break;
+    const a = fights[i], b = fights[j]; if (b.startEpoch - a.startEpoch > 15000) break;
     const overlap = a.participants.filter(v => b.participants.includes(v)).length / Math.max(1, Math.max(a.participants.length, b.participants.length));
-    if (a.reportCode !== b.reportCode && a.encounterId === b.encounterId && a.difficulty === b.difficulty && Math.abs(a.endEpoch - b.endEpoch) <= 5000 && overlap >= 0.8) duplicatePairs.push([a.key, b.key]);
+    if (a.reportCode !== b.reportCode && samePullTiming(a, b) && overlap >= 0.8) duplicatePairs.push([a.key, b.key]);
   }
   const suppressed = new Set(duplicatePairs.map(pair => pair[1]));
   const groups = [];
