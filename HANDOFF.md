@@ -2,6 +2,8 @@
 
 _Written 2026-10-24 by Claude for OpenAI Codex. Everything here comes from Mike's Claude project "Eden Ideas/Management" as of this date._
 
+> **Current status (updated 2026-10-25): for the deduction module, start with [DEVELOPER-HANDOVER.md](DEVELOPER-HANDOVER.md) and [PROGRESS-AND-BUILD-ORDER.md](PROGRESS-AND-BUILD-ORDER.md)** (added in PR #8). Mike authorized building on 2026-10-24 (issue #7), so any "planning only / do not start building" text below is superseded, and so is the Light/Normal/Strict three-mode text in section 9. The module uses one standard rule set and only deducts; Eden's existing system handles cuts and gold. Where this file and those two documents differ, they win. This file stays as background on Eden, Mike and the earlier packets.
+
 ## 1. What Eden is
 
 Eden is a **Retail World of Warcraft boosting community** (EU, server time CET/CEST).
