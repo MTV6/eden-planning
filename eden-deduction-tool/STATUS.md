@@ -1,51 +1,50 @@
-# Eden deduction module — review handoff
+# Eden deduction module — current status
 
-Updated 24 October 2026 by Codex. Version 0.5.0; local prototype, not deployed to Eden.
+Updated 25 October 2026 by Codex. **v0.5.0 local prototype; no Eden deployment or live deduction application.**
 
-## Working now
+Start with the [developer handover](../DEVELOPER-HANDOVER.md) and [progress/build order](../PROGRESS-AND-BUILD-ORDER.md). Those consolidate the current scope and next steps; older milestone notes record their original delivery stage.
 
-- Evidence-linked manual deduction review and imported example proposals, accept/reject, exact half-share totals and explicit whole-share rounding.
-- One standard policy, editable versioned rules/thresholds, policy snapshots pinned to runs, durable SQLite audit and deduction-only JSON export.
-- WCL server-side OAuth, report metadata, editable mixed/split-report grouping, selected kill and wipe capture, pagination, raw evidence retention, duplicate checks and participant classifications.
-- Capture progress, cancellation, restart interruption handling and evidence timeline. Unknown people remain unclassified and cannot be deducted.
-- WCL credentials copied locally with Mike's authorization; live OAuth verification passed. Grimoire remains unchanged and Eden runs independently.
+## Working locally
 
-## Verification and limits
+- Evidence-linked manual review, imported synthetic proposals, exact half-share totals, explicit RL floor/ceiling rounding and deduction-only confirmation/export.
+- One versioned policy, supported admin thresholds, pinned run policies, optimistic revisions and durable SQLite audit.
+- Server-side WCL OAuth, selected kill/wipe capture, pagination/integrity validation, provenance and capture job lifecycle.
+- Mixed/split-report grouping, duplicate guards and bounded cached discovery of other uploaders' reports.
+- Booster/helper/RL/buyer/LB/unknown classification, roster-list matching and evidence-backed alt ownership. Unknown people stay excluded; non-roster status never establishes a buyer.
+- Death cards with timed WCL links, lethal damage, recent healing, observed defensive use and debuff stacks.
+- Initial Heroic Ula’tek evidence pack: individual Doomscale cast failures and Roll during Mother’s Wrath. Conditional rule amounts require review; no automatic blame.
+- Compressed fact snapshots with version/settings and retained history. Reanalysis uses saved pages without new WCL queries.
 
-Latest milestone: **59 tests pass**. Explicit helper/buyer/LB/booster classification, staged roster matching, confirmed alt ownership, death-review cards and an initial Heroic Ula’tek pack are implemented. Generation reuses captured pages with no new WCL calls; facts and prior snapshots are retained compressed and audited. Conditional rule amounts require human review. See `MILESTONE-4-DEATH-REVIEW.md`.
+## Verification
 
-The second historical case now has a complete selected capture of 18 unique pulls (ten kills, eight logged wipes), 329 pages and 3,216,440 events. It produces 106 eligible death cards and three initial pack observations. Twenty-three LB and 132 unknown death events are excluded from candidates; the unknown characters still need buyer/helper/alt classification. No real deduction was accepted or applied. Earlier milestone notes below describe the stages when only metadata/search had been tested.
+**59 tests pass**, rerun 25 October 2026. Browser workflow checks passed on 24 October. See [latest milestone](MILESTONE-4-DEATH-REVIEW.md).
 
-Previous search milestone: **45 tests passed**. Missing-log discovery was tested on the second historical Eden run: all 13 expected characters searched; five candidate reports from four uploaders found. The strongest candidate matches all 13 characters on a pull, overlaps all three known final-boss pulls and offers eight additional candidate kills plus six wipes. A repeat browser search used zero new queries and 28 cache hits. Loading that candidate identified all three overlapping pulls and left the fresh selection empty for manual review. No events or deductions were imported by this search. See `MILESTONE-3-MISSING-LOGS.md`.
+The latest historical case captured 18 unique pulls: ten kills/eight logged wipes, 329 pages and 3,216,440 events, with three overlapping recordings excluded. Review generated 106 eligible death cards and three pack observations, not 106 offenses. Twenty-three LB and 132 unknown death events were excluded; 24 character identities remain unresolved. No real deduction was accepted or applied. Buyer exclusion is fixture-tested; real unknowns were not guessed into buyer roles.
 
-35 automated checks passed again before publication and after the capture-limit fix. The first authorized real Eden report was successfully captured: ten Heroic kills, zero recorded boss wipes, 273 pages and 2,679,804 raw events. Fourteen supplied roster members were matched; thirteen other characters remain unclassified. All stored-page hashes, terminal cursors, manifest event totals and the audit chain checked out. The review remains a local draft with zero deduction suggestions. Its 69 recorded deaths are evidence, not 69 proven mistakes.
+The derived fact projection was about 203 KiB compressed per snapshot. The database also stores a latest copy, earlier snapshots and raw capture. An earlier broad capture retained about 65 MB of compressed raw pages. Whole-run kilobyte storage, targeted acquisition, cleanup/retention and isolated WCL cost accounting are not delivered.
 
-The first attempt failed closed at the 500 MiB uncompressed capture limit; no partial review was created. Increasing that limit to 2 GiB allowed all ten pulls (905,713,426 uncompressed bytes) to finish. The five-million-event limit remains. See `LIVE-VALIDATION.md` for the redacted verification record. That initial validation covered one kill-only report; the second mixed report and wipe capture are now verified as described above.
+## Immediate order
 
-The initial Ula’tek pack recognizes a small set of cast/movement observations. General wipe attribution, padding, boss-damage priority and cooldown-holding detectors are not implemented. Live imports begin with evidence and no invented deduction proposals. The sample run's proposals are synthetic. An event or death alone does not establish fault.
+1. Developer reviews the package and maps actual Eden identity/draft/application contracts.
+2. Resolve identities and run scope from authoritative Eden context.
+3. Expert-validates the initial pack and positive/negative examples.
+4. Productionizes jobs, resources, credentials, retention and access.
+5. Runs an authenticated read-only pilot.
+6. Adds independent staff authority, idempotent real application and staging receipts.
+7. Expands packs and contextual damage-priority analysis as justified.
 
-Confirmation is local and exports always say `appliedToEden: false`. Nothing changes an Eden roster, closes a run, sends Discord messages or applies deductions. Local actor labels are not production authentication. Audit integrity checks are not tamper-proof storage. Suggested and locally confirmed decisions are logged; production application receipts are not implemented.
+Detailed tasks, owners, dependencies and gates are in the [roadmap](../PROGRESS-AND-BUILD-ORDER.md).
 
-## Next work
+## Limits and open decisions
 
-1. Confirm buyer/helper/alt identities for unresolved characters; keep unknown people excluded from deduction candidates.
-2. Review the Doomscale assignments and tank-movement evidence in the historical draft. Accept only supported incidents under the pinned rules.
-3. Have an encounter expert review the initial Ula’tek pack before expanding spells, difficulties or phase/crossing logic.
-4. Keep real evidence private and define production retention, permissions and background analysis jobs.
-5. Add contextual damage-priority analysis, then an Eden adapter with authenticated permissions and idempotent application receipts when developers provide contracts.
+No production auth, Eden adapter, actual application receipt, deployed admin service or dedicated appeal/recording interface. Typed reviewer labels are demonstration metadata. RL-targeted final export is blocked. WCL private-report user OAuth is unsupported. Context/phase/assignment/defensive availability and broad causal/padding attribution remain incomplete.
 
-## Policy and integration still open
+Open policy includes retrospective cross-boss activation, reset/recoverability definitions, requirement frequency, helper applicability, independent RL approval, pack ownership and evidence retention. Latest rules are one policy/no modes, pretrigger kill-pull permission, exact incident totals and explicit RL whole-share rounding. Eden owns all base cuts, replacement entitlement, gold, redistribution and refunds.
 
-- Whether one boss reaching three wipes retrospectively activates mistakes on other bosses; the prototype activates that boss only, with six total wipes as the separate run trigger. Kill-pull deductions remain independent.
-- Frequency and pre-trigger applicability of fixed requirement offenses; prototype requires manual explanations.
-- RL-targeted deductions need an independent staff workflow before export; final export currently blocks them.
-- Padding offense definition/tariff, encounter pack owner and update process, recording consent/access/retention, and proposed booster appeal views.
-- Existing Eden field mapping, cut constraints, role/identity permissions, application transaction and receipt contract. Eden continues to own cuts, replacement entitlement, gold, redistribution and refunds.
+## Source and historical evidence
 
-See the v1.4 master packet and `../eden-module-planning/IMPLEMENTATION-BASELINE.md` for the full decisions. Older three-mode proposals are superseded. `README.md` explains startup, local storage, contracts and limits. `MILESTONE-1.md` and `MILESTONE-2-WCL.md` record delivery evidence.
+Active server: review-server.js; active source: src/ledger/, src/wcl/, public/. Historical scanner servers/CLI/packs remain disconnected and unvalidated. Node 24+; no third-party dependencies.
 
-## Repository contents and collaboration
+[README](README.md) · [Milestone 1](MILESTONE-1.md) · [WCL milestone](MILESTONE-2-WCL.md) · [First capture validation](LIVE-VALIDATION.md) · [Missing-log milestone](MILESTONE-3-MISSING-LOGS.md) · [Latest milestone](MILESTONE-4-DEATH-REVIEW.md).
 
-`npm start` runs `review-server.js`; active code is `src/ledger/`, `src/wcl/` and `public/`. Earlier disconnected scanner files/packs are retained as historical scaffolding and have superseded assumptions; do not connect them without review. Node 24+ is required; no third-party packages are needed.
-
-Only source, synthetic fixtures and documentation are published. Credentials, `.env`, SQLite/raw evidence and local output are excluded. This branch builds on the v1.4 plan in PR #4 and leaves Claude's separate HANDOFF correction in PR #6 untouched. No merge or production deployment is performed.
+Only code, synthetic fixtures and redacted documentation are published. Secrets, real evidence, databases and output stay local. Grimoire is unchanged. PR #8 remains review work stacked on the plan in PR #4; Claude's HANDOFF correction in PR #6 is separate. No merge/deployment performed.

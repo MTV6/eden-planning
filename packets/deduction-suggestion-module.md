@@ -1,5 +1,7 @@
 # Eden deduction suggestion module — master plan
 
+> **Current delivery status — 25 October 2026:** Read the [developer handover](../DEVELOPER-HANDOVER.md) and [progress/build order](../PROGRESS-AND-BUILD-ORDER.md) first. This v1.4 packet defines the planned scope and historical stages; the v0.5.0 local prototype now delivers capture, missing-log discovery, explicit classification, death review and an initial Ula’tek pack. Remaining automation and Eden integration are not represented as complete. Later explicit build/publication instructions supersede this packet's earlier authorization wording. Unknown participants remain unknown until the RL confirms their role; no guessed buyers or alt ownership.
+
 **Version 1.4 · 24 October 2026 · Codex, for Mike and Claude**
 
 **Status: local implementation authorized by Mike; integration and production application are not authorized.** This version supersedes conflicting v1.3 wording. Claude reviewed the plan in PR #4 without changing its files; the subsequent comments record Mike's revised scope. Mike then instructed Codex to check the changes and start work.

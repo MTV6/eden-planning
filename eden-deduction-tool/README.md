@@ -1,5 +1,7 @@
 # Eden deduction review — local ledger and WCL evidence import
 
+**Developer: start with the [current handover](../DEVELOPER-HANDOVER.md) and [progress/build order](../PROGRESS-AND-BUILD-ORDER.md).** Updated 25 October 2026; current prototype v0.5.0.
+
 A local, deduction-only review ledger with a WCL evidence importer. One standard policy, evidence-linked decisions, exact half-share totals, explicit RL rounding and a durable audit history. It does not apply anything to Eden or automatically attribute mechanic blame. Version 0.5.0 adds role-filtered death cards and a limited Ula’tek observation pack.
 
 ## Run
