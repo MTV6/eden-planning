@@ -2,6 +2,8 @@
 
 _Written 2026-10-24 by Claude for OpenAI Codex. Everything here comes from Mike's Claude project "Eden Ideas/Management" as of this date._
 
+> **Current status (updated 2026-10-25): for the deduction module, start with [DEVELOPER-HANDOVER.md](DEVELOPER-HANDOVER.md) and [PROGRESS-AND-BUILD-ORDER.md](PROGRESS-AND-BUILD-ORDER.md)** (added in PR #8). Mike authorized building on 2026-10-24 (issue #7), so any "planning only / do not start building" text below is superseded, and so is the Light/Normal/Strict three-mode text in section 9. The module uses one standard rule set and only deducts; Eden's existing system handles cuts and gold. Where this file and those two documents differ, they win. This file stays as background on Eden, Mike and the earlier packets.
+
 ## 1. What Eden is
 
 Eden is a **Retail World of Warcraft boosting community** (EU, server time CET/CEST).
@@ -10,7 +12,7 @@ Eden is a **Retail World of Warcraft boosting community** (EU, server time CET/C
 - **Discord:** https://discord.gg/MPmyRWCjM (about 2,950 members). Note: the site links a different invite, `discord.gg/uRtNJKVSKy`.
 - **Discord bot:** links the site and Discord (announcements, roster messages, roles). We have not seen its code or command list yet.
 - **What happens there:** 100+ VIP raid runs a week, mythic boosts, alt gearing runs. Boosters sign up on the site; ilvl, Warcraft Logs and lockout status update automatically. Raid leaders (RLs) build rosters on the site, run the raid, then mark it Complete, after which it goes to attendance review and payouts. Accounts can be "frozen". There is an Elite Raider tier with applications.
-- **Developer:** credited on the site footer as "Aren". The dev team implements with their own Claude.
+- **Developer:** Sunking is the current developer and owner (Mike, 2026-10-24). The site footer still credits "Aren", the previous owner. The dev team implements with their own Claude.
 
 ## 2. Who Mike is and what we produce
 
