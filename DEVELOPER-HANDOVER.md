@@ -1,10 +1,16 @@
 # Eden deduction module — developer handover
 
-**Start here. Updated 25 October 2026 by Codex for Mike, Sunking/Eden's developers and Claude.**
+**Start here. Updated 27 October 2026 by Codex for Mike, Sunking/Eden's developers and Claude.**
 
 There is a working **local prototype, version 0.5.0**, with source, synthetic fixtures and 59 passing tests. The next job is to review the identity/evidence workflow and agree Eden integration contracts, then pilot a narrow implementation. It is not a production plugin or a finished automatic blame engine.
 
 Current implementation and this handover are on branch **`codex/deduction-tool-wcl-review`**, in [PR #8](https://github.com/MTV6/eden-planning/pull/8). The implementation baseline is commit `e4eca73c421a503d48f82671466c7064878fe8c5`; later handover commits may contain documentation only. PR #8 is stacked on the plan in [PR #4](https://github.com/MTV6/eden-planning/pull/4). Neither is represented here as merged or deployed.
+
+## Latest policy — 27 October 2026
+
+Read the [complete current rules and explanations](deductions-review/Eden-rules-current.md) or use the [Discord-ready Notepad file](deductions-review/Eden-Discord-Rulebook-for-Sunking.txt). The [developer clarification handoff](deductions-review/Eden-Rule-Clarifications-Developer-Handoff-2026-10-27.md) records every changed decision and keeps deferred parse formulas, other boost formats and redistribution implementation proposals out of the Discord posts.
+
+**Policy changed; application code did not.** The v0.5.0 prototype still contains older rounding/performance behavior. Reconcile it with this policy before a pilot. Its last reported 59-test result is from 25 October, not validation of these new rules.
 
 ## Read in this order
 
@@ -14,7 +20,7 @@ Current implementation and this handover are on branch **`codex/deduction-tool-w
 4. [Latest milestone and validation](eden-deduction-tool/MILESTONE-4-DEATH-REVIEW.md): death cards, Ula’tek pack and tested boundaries.
 5. [Master plan v1.4](packets/deduction-suggestion-module.md) and [implementation baseline](eden-module-planning/IMPLEMENTATION-BASELINE.md): detailed policy, website observations and open-question IDs.
 
-**Document precedence:** Mike's latest explicit decisions → dated entries in [decisions.md](decisions.md) and the implementation baseline → this current handover/progress record → master plan → older milestone/history documents. An implemented behavior is not itself approval of an unresolved community rule. Root `HANDOFF.md` still contains earlier planning-only/three-mode text; those portions are superseded. Its developer-name correction is tracked separately in [Claude's PR #6](https://github.com/MTV6/eden-planning/pull/6); this handover does not overwrite that work.
+**Document precedence:** Mike's latest explicit decisions → [27 October rules](deductions-review/Eden-rules-current.md) and [clarifications](deductions-review/Eden-Rule-Clarifications-Developer-Handoff-2026-10-27.md) → dated entries in [decisions.md](decisions.md) → the older implementation baseline → this current handover/progress record → master plan → older milestone/history documents. An implemented behavior is not itself approval of an unresolved community rule. Root `HANDOFF.md` still contains earlier planning-only/three-mode text; those portions are superseded. Its developer-name correction is tracked separately in [Claude's PR #6](https://github.com/MTV6/eden-planning/pull/6); this handover does not overwrite that work.
 
 ## Problem
 
@@ -37,17 +43,17 @@ The local prototype already provides explicit classification, WCL capture/search
 | Mistake directly causing a wipe | 1 share when causation/recoverability are established. |
 | Soak, interrupt, taunt, dispel, target, positioning or utility failure | Apply the existing impact rule; no new universal fee for each event. |
 | Unused defensive/potion/Healthstone contributing to the same incident | Supporting evidence, not an additional charge for the same mistake. |
-| Voice, preparation, attendance or conduct requirement offense | 1 share each; applicability/frequency still need definition for automation. |
+| Requirement offenses | Voice/preparation: 1 share each per run. Lateness: 1 per boss missed. Conduct: normally 1 per run; separate serious unrelated offenses may add deductions. All can apply before the wipe trigger; try warnings first and allow RL leniency. |
 | DC causing a missed recoverable mechanic and preventable wipe | 1 share; inactivity alone does not establish a DC or fault. |
 | Ordinary wipe-pull activation | Initially 3 wipes on one boss OR 6 across the run; adjustable and pinned to a policy version. |
 | Kill-pull mistakes | Eligible independently, including before wipe activation and in zero-wipe runs. |
 | Pretrigger wipe exceptions | Damage shortfall causing a 1% wipe; insufficient healing causing multiple avoidable deaths. Evidence and review required. |
-| Performance reference | Bot requirements; below-50 average damage parse with lacking raid DPS is replacement context, not an invented flat fine. Averaging details remain open. |
+| Performance reference | Agreed run/bot expectations and useful damage. Numerical parse formulas are deferred pending bot-picker data; do not automate the older 50 or minimum-minus-ten formulas. |
 | Staff escalation | More than 5 wipes on a boss or a run taking too long; separate from deduction activation. |
-| Totals and export | Sum exact half shares first. For a fractional total the RL explicitly chooses floor or ceiling for Eden's whole-share fields; no default. Preserve both amounts and actor/time. |
+| Totals and export | Sum exact half shares, then floor the final deduction. Preserve exact and final amounts and actor/time. This supersedes the prototype's floor/ceiling choice. |
 | Duplicate incident | Do not charge the same causal event as both a death and a wipe. Accepted changes invalidate affected rounding. |
 
-Share prices come from the pinned policy, not from encounter packs or generated prose. Kill-pull permission is settled; cross-boss retrospective activation and reset/abort counting remain open. Known post-wipe-call failures cannot establish a new performance deduction. A missing wipe-call marker does not prove the raid was still recoverable.
+Share prices come from the pinned policy, not from encounter packs or generated prose. Kill-pull permission is settled. Either wipe trigger opens earlier qualifying wipe pulls across the entire run. RL confirms resets/aborts in the final review sheet and confirmed resets/aborts are excluded from the count. Ignoring a mechanic and killing someone on a kill pull can warrant 0.5 share. Known post-wipe-call failures cannot establish a new performance deduction. A missing wipe-call marker does not prove the raid was still recoverable.
 
 ### Participant policy
 
@@ -65,7 +71,7 @@ Rostered boosters should come from selected roster characters, not only signup s
 1. **Logs & duration:** provide report(s), approximate session window and recording reference. Load metadata first, review run grouping, search other uploaders if incomplete, and select each pull once. Allow a final encounter to finish beyond the scheduled window when evidence establishes continuity.
 2. **Distribution, below the existing attendance check:** reconcile roster, helper, buyer/LB and alt identities. Review unknowns, relevant deaths and mechanic cards, including kill pulls. Keep attendance/pay adjustments distinct from incident deductions.
 3. Choose the player, existing rule, reason and evidence. Prepare/accept/edit/reject as appropriate; preserve the decision history. Inspect assignment, control opportunity and defensive/healing context where relevant.
-4. Review per-player totals and explicitly round fractional totals for Eden's whole-share fields.
+4. Review per-player exact totals and floor the final deduction for Eden's whole-share fields. The current prototype still needs this policy change.
 5. Transfer only the authorized confirmed proposal into Eden's draft using a future validated adapter. Preserve manual adjustments and concurrent edits. Review warnings/restrictions and final outgoing messages through Eden's existing controls.
 6. Eden's own completion/application transaction makes the real change and returns a receipt. A local confirmation or downloaded JSON is not application.
 
@@ -77,9 +83,13 @@ The initial context/movement windows are editable and saved with each generated 
 
 ### Appeals and existing financial behavior
 
-The existing policy is staff-first appeal review, then the RL answers, then staff decides. RL must provide logs and a recording with Discord voice; at least-until-payout retention is the existing expectation. If staff orders a refund after attendance is paid, the RL pays the affected people personally within 24 hours. Dedicated appeal/recording interfaces are not delivered here.
+Staff reviews appeals first, then the RL answers; staff council/Sunking have final authority. Appeals last 48 hours from the deduction-channel post. RL must log and provide a recording with Discord voice; retain recordings for 48 hours from that post and longer for active disputes. Staff may decide using Warcraft Logs when recording fails. Correct attendance before processing where possible; if sent and irreversible, RL refunds personally within 24 hours of the decision, without clawbacks from other players. Dedicated appeal/recording interfaces are not delivered here.
 
-Eden owns replacement entitlement and helper payments. A net cut reduction must not be treated as an equal number of proven mechanic offenses. Redistribution remains Eden's calculation: 70% to eligible non-deducted boosters / 30% to an undeducted RL; a deducted RL gets no extra and the proceeds go to eligible non-deducted boosters. Deducted players receive no deduction proceeds. This module does not calculate that gold.
+Eden owns replacement entitlement and helper payments. A net cut reduction must not be treated as an equal number of proven mechanic offenses. Redistribution remains Eden's calculation: 70% to eligible non-deducted boosters / 30% to an undeducted RL; a deducted RL gets no extra and the proceeds go to eligible non-deducted boosters. Deducted players receive no deduction proceeds. If everyone is deducted, gold goes to Eden management. Equal full-run booster portions and proportional helper portions are a proposal to check against Eden's existing calculation; see the clarification handoff. This module does not calculate that gold.
+
+Heroic VIP uses 13 boosters / 3 LBs; other formats are deferred. Replacement pay must be agreed in advance: unsaved full cut unless voluntarily reduced, saved full cut or minimum 3/8 unless voluntarily reduced/free. Half-cut removal can have further separate incident deductions, capped at zero retained. Full removal permits additional recorded findings, not further share removal.
+
+No-show sanctions use rolling windows: two in the preceding two weeks means one week suspended; four or more in the preceding month means one month, replacing the weekly suspension. Staff help requires only a ping and brief request; no detailed notification template.
 
 ## Implementation notes
 
@@ -150,7 +160,7 @@ Production acceptance requires the gates in [the ordered roadmap](PROGRESS-AND-B
 
 **Developer first:** confirm the identity/run/draft/application contracts above, review the package architecture, and choose an adaptation boundary for Eden's runtime/database. Do not start by rewriting the WCL client or building a second payout engine.
 
-**Mike/staff first:** decide reset counting; cross-boss retrospective activation; independent RL approval; exact offense applicability; pack maintainer; evidence access/retention; and pilot acceptance targets. Unknown buyer names or tentative alt guesses are not resolved by this document.
+**Next:** implement the settled 27 October policy before a pilot. Mike/staff and developers still need independent RL approval mechanics, a pack maintainer, evidence access controls and pilot acceptance targets. Parse formulas await bot data; other boost formats await submission. Reset counting, cross-boss retrospective activation, appeal deadline and recording-retention start are now settled. Unknown buyer names or tentative alt guesses are not resolved by this document.
 
 Padding/boss-priority/cooldown-holding analysis remains requested future scope with no standalone approved tariff. A comprehensive defensive simulator and automatic full-fight blame attribution are deferred. Expand a small reviewed pack before attempting those features.
 

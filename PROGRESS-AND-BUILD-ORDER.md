@@ -2,6 +2,20 @@
 
 **25 October 2026 · Codex · v0.5.0 local prototype.** Read [the developer handover](DEVELOPER-HANDOVER.md) first. Status describes tested local capability, not production approval. Priorities below are a proposed delivery order for the developer; unresolved community rules are not silently decided.
 
+## 27 October policy reconciliation — before the pilot
+
+Read the [current rules](deductions-review/Eden-rules-current.md) and [developer clarification handoff](deductions-review/Eden-Rule-Clarifications-Developer-Handoff-2026-10-27.md). These decisions are documented but **not yet implemented** in v0.5.0.
+
+- [ ] Replace floor/ceiling choice with final-total floor; preserve exact totals.
+- [ ] Add RL reset/abort confirmation, exclude confirmed resets and enable whole-run retrospective review after either trigger.
+- [ ] Apply revised requirement frequencies/leniency and half/full-cut caps; keep separate offenses distinct.
+- [ ] Use Eden's authoritative attendance history for rolling no-show sanctions; monthly replaces weekly.
+- [ ] Anchor appeals and recording retention to deduction-channel publication; preserve dispute evidence.
+- [ ] Defer numeric parse formulas and non-Heroic-VIP formats; compare helper redistribution proposal with Eden's existing calculation.
+- [ ] Validate these changes with focused tests before describing the prototype as compliant.
+
+The progress table below describes the earlier implementation. Test baseline remains 25 October.
+
 ## Current progress
 
 | Area | State | Evidence / remaining gap |
@@ -96,7 +110,7 @@ Depends on steps 1–4's applicable gates. Review and contract work may overlap;
 Depends on pilot acceptance, field mapping and staff approval decisions.
 
 - [ ] Define and enforce independent approval for RL-targeted/conflicted decisions.
-- [ ] Preserve exact incidents, chosen whole-share rounding, evidence, policy/pack versions and authenticated actor/time.
+- [ ] Preserve exact incidents, final-total floor, evidence, policy/pack versions and authenticated actor/time.
 - [ ] Transfer confirmed deductions to the authorized Eden draft using revision checks and a stable idempotency key.
 - [ ] Apply through Eden's server transaction; return an actual success/failure receipt. Retry must not double deduct or overwrite newer manual edits.
 - [ ] Keep completion, warning/restriction choices, messaging, attendance and gold within Eden's existing ownership.
@@ -117,14 +131,14 @@ Depends on pilot acceptance, field mapping and staff approval decisions.
 
 | Topic | Who answers | Interim handling |
 | --- | --- | --- |
-| Boss threshold opens other bosses retrospectively? | Mike/staff | Current boss only unless run-wide trigger; kill permission independent. |
-| Deliberate reset/abort and unrecoverable cutoff | Mike/staff + encounter reviewer | Keep the evidence; manual resolution. |
+| Retrospective activation | Settled 27 October; developer implements | Either trigger opens earlier wipe pulls across the entire run; kill permission independent. |
+| Reset/abort and unrecoverable cutoff | RL + encounter reviewer | RL confirms resets/aborts; exclude them from count. Recoverability remains evidence-based review. |
 | Exact requirement offense definitions/frequency and early-wipe exceptions | Mike/staff | Manual explanation; no new automatic fines. |
 | Helper applicability and replacement/cut constraints | Staff + developer | Review helpers where applicable; Eden owns entitlement and caps. |
 | RL independent reviewer / conflicts / overrides | Staff + developer | RL-targeted final export blocked in prototype. |
 | Authoritative buyers, helper accounts and alt ownership | Developer + RL | Unknown until explicitly confirmed; no guessing. |
 | Pack ownership and supported patch/strategy versions | Staff + developer | Initial narrow pilot only. |
-| Evidence access, voice consent/process, retention and appeal deadline | Staff + developer | Keep real data out of the planning repo; no invented legal/process rule. |
+| Evidence access and implementation | Staff + developer | Appeal and recording retention: 48 hours from deduction post; preserve active dispute evidence longer. Access controls remain to implement. |
 | Pilot error/latency/cost targets and manual fallback | Mike/staff + developer | Agree before enabling real application. |
 | Production runtime/database/jobs/secret store and apply contracts | Developer | Local interfaces remain provisional. |
 
