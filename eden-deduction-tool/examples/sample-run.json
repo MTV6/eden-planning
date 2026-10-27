@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "title": "Heroic review · synthetic zero-wipe example",
+  "source": "synthetic",
+  "players": [
+    {"id": "aster", "name": "Aster", "character": "Aster-ExampleRealm", "role": "booster"},
+    {"id": "briar", "name": "Briar", "character": "Briar-ExampleRealm", "role": "booster"},
+    {"id": "cinder", "name": "Cinder", "character": "Cinder-ExampleRealm", "role": "raidleader"},
+    {"id": "client", "name": "Example buyer", "character": "Buyer-ExampleRealm", "role": "buyer"}
+  ],
+  "pulls": [
+    {"id": "pull-1", "boss": "Example encounter A", "outcome": "kill", "durationSeconds": 240, "coverage": "complete", "events": [
+      {"id": "a-cast", "playerId": "aster", "type": "cast", "timeSeconds": 18, "detail": "Synthetic mechanic starts; assignment is described in fixture notes."},
+      {"id": "a-death", "playerId": "aster", "type": "death", "timeSeconds": 43, "detail": "Fixture: dies to a documented avoidable ground effect; no wipe. This is a synthetic assertion, not a live detector result."},
+      {"id": "b-death", "playerId": "briar", "type": "death", "timeSeconds": 118, "detail": "Fixture: separate avoidable death; the raid recovers and kills the boss."},
+      {"id": "b-output", "playerId": "briar", "type": "note", "timeSeconds": 180, "detail": "Fixture: high overall output and low boss damage. Add assignment and cooldown readiness are unknown; padding cannot be established."}
+    ]},
+    {"id": "pull-2", "boss": "Example encounter B", "outcome": "kill", "durationSeconds": 300, "coverage": "partial", "events": [
+      {"id": "a-death-2", "playerId": "aster", "type": "death", "timeSeconds": 65, "detail": "Fixture: second independent avoidable death on another kill pull. Imported evidence is partial and needs review."},
+      {"id": "c-cast", "playerId": "cinder", "type": "cast", "timeSeconds": 80, "detail": "Fixture: raid utility cast. This does not establish correctness of a voice call."}
+    ]}
+  ],
+  "suggestions": [
+    {"id": "proposal-1", "playerId": "aster", "pullId": "pull-1", "ruleId": "avoidable-death", "evidenceEventIds": ["a-death"], "explanation": "Example proposal: review the first avoidable death. Small mistake, 0.5 share, on a kill pull."},
+    {"id": "proposal-2", "playerId": "aster", "pullId": "pull-2", "ruleId": "avoidable-death", "evidenceEventIds": ["a-death-2"], "explanation": "Example proposal: check partial evidence for the second death. If both Aster proposals are accepted, 0.5 + 0.5 = 1 without rounding."},
+    {"id": "proposal-3", "playerId": "briar", "pullId": "pull-1", "ruleId": "avoidable-death", "evidenceEventIds": ["b-death"], "explanation": "Example proposal: separate small mistake. If accepted, Briar's 0.5 total requires an explicit down/up choice."},
+    {"id": "observation-padding", "playerId": "briar", "pullId": "pull-1", "ruleId": null, "evidenceEventIds": ["b-output"], "explanation": "Observation only: possible damage-priority discrepancy. No padding tariff or supported fault attribution; no shares suggested."}
+  ]
+}

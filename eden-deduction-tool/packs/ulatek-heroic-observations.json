@@ -1,0 +1,8 @@
+{
+  "id":"ulatek-heroic-observations-v1", "version":1, "encounterId":3492, "difficulty":4,
+  "snapshotId":"midnight-s2-wcl-zone53-partition1-eu", "syntheticOnly":false,
+  "status":"identity-observations-only",
+  "sources":["Grimoire data/encounters/midnight-s2-ulatek-heroic.json, inspected 2026-10-24", "https://www.warcraftlogs.com/reports/Q8XtDFNjfbc923xq?fight=50&source=22"],
+  "rules":[{"id":"caustic-waves-observation","abilityIds":[1292403],"label":"Caustic Waves","avoidableDeath":false}],
+  "limitations":["Ability identity is sourced; automatic avoidability, fault and wipe attribution are NOT certified.","Exact snapshot match required. Current live reports are not automatically assigned this historical snapshot."]
+}
